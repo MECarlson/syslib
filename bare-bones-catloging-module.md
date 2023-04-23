@@ -28,4 +28,44 @@ manual into Nano.
 4. Ensure the web form is secure by using Apache2
 authorization mechanism.
 
+Create authentication file in etc/apache2 directory.
+'''
+audo htpasswd -c /etc/apache2/.htpasswd libcat
+'''
+
+Insruct Apache2 to use htpasswd to limit access to
+the cataloging module using Nano.
+
+'''
+sudo nano /etc/apache2/apache2.conf
+'''
+
+Change **None** to **All** in the third stanza.
+
+Change the cataloging directory and use Nano
+to create a file called .htaccess.
+
+'''
+cd /var/www/html/cataloging
+sudo nano .htaccess
+'''
+
+Add the following content:
+AuthType Basic
+AuthName "Athorization Required"
+uthUserFile /etc/apache2/.htpasswd
+Require valid-user
+
+Check configuration and restart Apache2.
+
+'''
+apachectl configtest
+sudo systemctl restart apache2
+systemctl status apache2
+'''
+
+5. Revisit the cataloging module which
+should now require a username and password. 
+
+
  
